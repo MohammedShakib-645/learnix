@@ -1,0 +1,9 @@
+{
+  "name": "learnix",
+  "version": "1.0.0",
+  "description": "LEARNIX AI - The All-in-One Student Platform",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx live-server --port=3000 --open=index.html"
+  }
+}

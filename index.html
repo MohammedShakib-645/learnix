@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEARNIX AI – All-in-One Student Platform</title>
+  <meta name="description" content="LEARNIX AI is the ultimate student platform for discovering internships, free certificates, learning resources, hackathons, jobs, scholarships, coding roadmaps, and career opportunities." />
+  <meta property="og:title" content="LEARNIX AI – All-in-One Student Platform" />
+  <meta property="og:description" content="AI-powered student hub for internships, certificates, courses, hackathons, jobs, and career growth." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/main.css?v=4.0" />
+  <link rel="manifest" href="manifest.json" />
+
+</head>
+<body>
+
+<!-- ===== LOADER ===== -->
+<div id="loader" class="loader-overlay">
+  <div class="loader-content">
+    <div class="loader-logo">
+      <span class="logo-t">L</span>EARNIX
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <p class="loader-text">Powering your career journey...</p>
+  </div>
+</div>
+<script>
+  setTimeout(function() {
+    var l = document.getElementById("loader");
+    if (l) l.classList.add("hidden");
+  }, 1000);
+</script>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo" onclick="showPage('home')">
+      <div class="logo-icon">L</div>
+      <span>LEARNIX <span class="logo-ai">AI</span></span>
+    </a>
+
+    <div class="nav-search" id="navSearchWrap">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="navSearchInput" placeholder="Search internships, courses, jobs..." class="search-input" oninput="handleSearch(this.value)" onfocus="showSuggestions()" onblur="hideSuggestions()" />
+        <button class="voice-btn" onclick="startVoiceSearch()" title="Voice Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+      </div>
+      <div class="search-suggestions" id="searchSuggestions"></div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn btn-outline" id="installAppBtn" onclick="installPWAApp()" title="Download & Install App">📱 Download App</button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn btn-ghost" onclick="showPage('login')">Login</button>
+      <button class="btn btn-primary" onclick="showPage('login')">Get Started</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" onclick="showPage('internships');toggleMobileMenu()">Internships</a>
+    <a href="#" onclick="showPage('certificates');toggleMobileMenu()">Certificates</a>
+    <a href="#" onclick="showPage('learning');toggleMobileMenu()">Learning</a>
+    <a href="#" onclick="showPage('roadmaps');toggleMobileMenu()">Roadmaps</a>
+    <a href="#" onclick="showPage('hackathons');toggleMobileMenu()">Hackathons</a>
+    <a href="#" onclick="showPage('jobs');toggleMobileMenu()">Jobs</a>
+    <a href="#" onclick="showPage('scholarships');toggleMobileMenu()">Scholarships</a>
+    <a href="#" onclick="showPage('aitools');toggleMobileMenu()">AI Tools</a>
+    <a href="#" onclick="showPage('resume');toggleMobileMenu()">Resume Builder</a>
+    <a href="#" onclick="showPage('dashboard');toggleMobileMenu()">Dashboard</a>
+  </div>
+</nav>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">DISCOVER</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link active" onclick="showPage('home')" data-page="home">
+        <span class="sidebar-icon">🏠</span> Home
+      </a>
+      <a class="sidebar-link" onclick="showPage('internships')" data-page="internships">
+        <span class="sidebar-icon">💼</span> Internships
+        <span class="badge badge-new">New</span>
+      </a>
+      <a class="sidebar-link" onclick="showPage('certificates')" data-page="certificates">
+        <span class="sidebar-icon">🎓</span> Certificates
+      </a>
+      <a class="sidebar-link" onclick="showPage('learning')" data-page="learning">
+        <span class="sidebar-icon">📚</span> Learning Hub
+      </a>
+      <a class="sidebar-link" onclick="showPage('roadmaps')" data-page="roadmaps">
+        <span class="sidebar-icon">🗺️</span> Roadmaps
+      </a>
+      <a class="sidebar-link" onclick="showPage('hackathons')" data-page="hackathons">
+        <span class="sidebar-icon">⚡</span> Hackathons
+        <span class="badge badge-live">Live</span>
+      </a>
+      <a class="sidebar-link" onclick="showPage('jobs')" data-page="jobs">
+        <span class="sidebar-icon">🚀</span> Jobs
+      </a>
+      <a class="sidebar-link" onclick="showPage('scholarships')" data-page="scholarships">
+        <span class="sidebar-icon">🏆</span> Scholarships
+      </a>
+    </nav>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">TOOLS</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" onclick="showPage('aitools')" data-page="aitools">
+        <span class="sidebar-icon">🤖</span> AI Tools
+      </a>
+      <a class="sidebar-link" onclick="showPage('projects')" data-page="projects">
+        <span class="sidebar-icon">💡</span> Project Hub
+      </a>
+      <a class="sidebar-link" onclick="showPage('resume')" data-page="resume">
+        <span class="sidebar-icon">📄</span> Resume Builder
+      </a>
+      <a class="sidebar-link" onclick="showPage('interview')" data-page="interview">
+        <span class="sidebar-icon">🎯</span> Interview Hub
+      </a>
+      <a class="sidebar-link" onclick="showPage('coding')" data-page="coding">
+        <span class="sidebar-icon">💻</span> Coding Practice
+      </a>
+    </nav>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">ACCOUNT</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" onclick="showPage('dashboard')" data-page="dashboard">
+        <span class="sidebar-icon">📊</span> Dashboard
+      </a>
+      <a class="sidebar-link" onclick="showPage('login')" data-page="login">
+        <span class="sidebar-icon">🔑</span> Login / Signup
+      </a>
+    </nav>
+  </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content" id="mainContent">
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page active">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="hero-orb orb-1"></div>
+        <div class="hero-orb orb-2"></div>
+        <div class="hero-orb orb-3"></div>
+        <div class="grid-lines"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          AI-Powered Platform for Students
+        </div>
+        <h1 class="hero-title">
+          Your <span class="gradient-text">AI Career</span><br/>
+          Companion
+        </h1>
+        <p class="hero-subtitle">
+          Discover internships, free certificates, learning resources, hackathons, jobs, scholarships, and coding roadmaps — all in one AI-powered platform.
+        </p>
+        <div class="hero-search">
+          <div class="hero-search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="heroSearch" placeholder="Try: Google Internship, Free Python Course, AI Jobs..." oninput="handleHeroSearch(this.value)" onkeydown="if(event.key==='Enter')doSearch()" />
+            <button class="btn btn-primary" onclick="doSearch()">Search with AI</button>
+          </div>
+          <div class="hero-tags">
+            <button onclick="setSearch('Google Internship')">Google Internship</button>
+            <button onclick="setSearch('Free Python Certificate')">Free Python Cert</button>
+            <button onclick="setSearch('Remote Jobs')">Remote Jobs</button>
+            <button onclick="setSearch('AI Course')">AI Course</button>
+            <button onclick="setSearch('Full Stack Roadmap')">Full Stack Roadmap</button>
+            <button onclick="setSearch('Hackathon 2025')">Hackathon 2025</button>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="500">0</div>
+            <div class="stat-label">Internships</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="300">0</div>
+            <div class="stat-label">Free Courses</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="50">0</div>
+            <div class="stat-label">Partner Companies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="100000">0</div>
+            <div class="stat-label">Students</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Student Profile Setup & Personalized Recommendations -->
+    <section class="section" id="studentProfileSection">
+      <div class="generator-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+          <div>
+            <h3>🎯 AI Personalization & Profile Setup</h3>
+            <p style="font-size:0.85rem; color:var(--text2);">Enter your details below to get tailored 100% Free Courses, Certificates, and Internships matching your branch, year, and interests with direct links!</p>
+          </div>
+        </div>
+        <div class="gen-row" style="margin-bottom:16px;">
+          <select class="filter-select" id="profBranch">
+            <option value="">Select Branch</option>
+            <option value="CS/IT">CS / IT / Software</option>
+            <option value="ECE/EE">ECE / Electrical</option>
+            <option value="Mechanical">Mechanical Engineering</option>
+            <option value="Civil">Civil Engineering</option>
+            <option value="Any Branch">Other / Any Branch</option>
+          </select>
+          <select class="filter-select" id="profYear">
+            <option value="">Select Academic Year</option>
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year / Graduate</option>
+          </select>
+          <select class="filter-select" id="profDomain">
+            <option value="">Select Interest Domain</option>
+            <option value="AI/ML">AI / Machine Learning</option>
+            <option value="Software Development">Software Development / Web</option>
+            <option value="Data Science">Data Science & Analytics</option>
+            <option value="Cloud Computing">Cloud Computing & DevOps</option>
+            <option value="Cybersecurity">Cybersecurity & Networks</option>
+            <option value="UI/UX Design">UI/UX & Product Design</option>
+          </select>
+          <select class="filter-select" id="profMode">
+            <option value="">Work Preference</option>
+            <option value="remote">Remote Only</option>
+            <option value="onsite">Onsite Only</option>
+            <option value="hybrid">Hybrid / Any</option>
+          </select>
+          <button class="btn btn-primary" onclick="saveAndGenerateRecommendations()">Get My Recommendations ✨</button>
+        </div>
+      </div>
+      
+      <!-- Recommended Cards Hub -->
+      <div id="personalizedHub" style="margin-top:24px; display:none;">
+        <div class="section-header">
+          <h2>🌟 Recommended For You</h2>
+          <span class="badge badge-new">AI Personalized</span>
+        </div>
+        <div class="cards-grid" id="personalizedGrid"></div>
+      </div>
+    </section>
+
+    <!-- Quick Access Grid -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Everything You Need</h2>
+        <p>Your complete career toolkit in one place</p>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-card" onclick="showPage('internships')" style="--card-color: #3b82f6">
+          <div class="quick-icon">💼</div>
+          <div class="quick-title">Internships</div>
+          <div class="quick-desc">500+ opportunities from top companies</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('certificates')" style="--card-color: #10b981">
+          <div class="quick-icon">🎓</div>
+          <div class="quick-title">Free Certificates</div>
+          <div class="quick-desc">300+ free courses with certificates</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('learning')" style="--card-color: #8b5cf6">
+          <div class="quick-icon">📚</div>
+          <div class="quick-title">Learning Hub</div>
+          <div class="quick-desc">Curated resources for every skill</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('roadmaps')" style="--card-color: #f59e0b">
+          <div class="quick-icon">🗺️</div>
+          <div class="quick-title">Roadmaps</div>
+          <div class="quick-desc">Step-by-step career paths</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('hackathons')" style="--card-color: #ef4444">
+          <div class="quick-icon">⚡</div>
+          <div class="quick-title">Hackathons</div>
+          <div class="quick-desc">Compete & win cash prizes</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('jobs')" style="--card-color: #06b6d4">
+          <div class="quick-icon">🚀</div>
+          <div class="quick-title">Jobs</div>
+          <div class="quick-desc">Fresher to experienced roles</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('scholarships')" style="--card-color: #ec4899">
+          <div class="quick-icon">🏆</div>
+          <div class="quick-title">Scholarships</div>
+          <div class="quick-desc">Fund your education</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('aitools')" style="--card-color: #14b8a6">
+          <div class="quick-icon">🤖</div>
+          <div class="quick-title">AI Tools</div>
+          <div class="quick-desc">Best AI tools for students</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('resume')" style="--card-color: #6366f1">
+          <div class="quick-icon">📄</div>
+          <div class="quick-title">Resume Builder</div>
+          <div class="quick-desc">ATS-ready resume generator</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('interview')" style="--card-color: #f97316">
+          <div class="quick-icon">🎯</div>
+          <div class="quick-title">Interview Hub</div>
+          <div class="quick-desc">Mock interviews & AI feedback</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('coding')" style="--card-color: #84cc16">
+          <div class="quick-icon">💻</div>
+          <div class="quick-title">Coding Practice</div>
+          <div class="quick-desc">Daily challenges & DSA</div>
+          <div class="quick-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="showPage('projects')" style="--card-color: #a855f7">
+          <div class="quick-icon">💡</div>
+          <div class="quick-title">Project Hub</div>
+          <div class="quick-desc">AI-generated project ideas</div>
+          <div class="quick-arrow">→</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trending Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2>🔥 Trending Now</h2>
+        <button class="btn btn-ghost btn-sm" onclick="showPage('internships')">View All</button>
+      </div>
+      <div class="cards-grid" id="trendingCards"></div>
+    </section>
+
+    <!-- Daily Tech News -->
+    <section class="section">
+      <div class="section-header">
+        <h2>📰 Daily Tech News</h2>
+        <span class="live-tag">LIVE</span>
+      </div>
+      <div class="news-grid" id="newsGrid"></div>
+    </section>
+
+    <!-- AI Chatbot Widget -->
+    <div class="ai-chatbot-widget" id="chatWidget">
+      <div class="chat-header" onclick="toggleChat()">
+        <div class="chat-avatar">LX</div>
+        <div>
+          <div class="chat-name">LEARNIX AI Assistant</div>
+          <div class="chat-status">Online • Ask me anything</div>
+        </div>
+        <button class="chat-close" id="chatToggleBtn">💬</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg ai">
+            <div class="msg-bubble">👋 Hi! I'm your LEARNIX AI assistant. Ask me about internships, courses, jobs, or anything career-related!</div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" class="chat-input" id="chatInput" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()" />
+          <button class="btn btn-primary btn-sm" onclick="sendChat()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH RESULTS PAGE -->
+  <div id="page-search" class="page">
+    <div class="page-header">
+      <h1>Search Results</h1>
+      <p id="searchResultInfo">Showing results for your query</p>
+    </div>
+    <div class="search-results-grid" id="searchResultsGrid"></div>
+  </div>
+
+  <!-- INTERNSHIPS PAGE -->
+  <div id="page-internships" class="page">
+    <div class="page-header">
+      <h1>💼 Internship Hub</h1>
+      <p>Discover 500+ verified internships from top companies</p>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filterInternships('all', this)">All</button>
+        <button class="filter-btn" onclick="filterInternships('remote', this)">Remote</button>
+        <button class="filter-btn" onclick="filterInternships('onsite', this)">Onsite</button>
+        <button class="filter-btn" onclick="filterInternships('hybrid', this)">Hybrid</button>
+        <button class="filter-btn" onclick="filterInternships('paid', this)">Paid</button>
+        <button class="filter-btn" onclick="filterInternships('unpaid', this)">Unpaid</button>
+      </div>
+      <div class="filter-selects">
+        <select class="filter-select" id="companyFilter" onchange="applyFilters()">
+          <option value="">All Companies</option>
+          <option>Google</option><option>Microsoft</option><option>Amazon</option>
+          <option>IBM</option><option>Cisco</option><option>Oracle</option>
+          <option>Intel</option><option>NVIDIA</option><option>Adobe</option>
+          <option>Infosys</option><option>TCS</option><option>Wipro</option>
+          <option>Deloitte</option><option>Accenture</option><option>SAP</option>
+          <option>Salesforce</option><option>AICTE</option><option>EduSkills</option>
+          <option>Internshala</option><option>Forage</option><option>ISRO</option><option>DRDO</option>
+        </select>
+        <select class="filter-select" id="domainFilter" onchange="applyFilters()">
+          <option value="">All Domains</option>
+          <option>Software Development</option><option>Data Science</option>
+          <option>AI/ML</option><option>Cloud Computing</option>
+          <option>Cybersecurity</option><option>UI/UX Design</option>
+          <option>Marketing</option><option>Finance</option>
+        </select>
+        <select class="filter-select" id="durationFilter" onchange="applyFilters()">
+          <option value="">Duration</option>
+          <option>1 Month</option><option>2 Months</option>
+          <option>3 Months</option><option>6 Months</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cards-grid" id="internshipsGrid"></div>
+  </div>
+
+  <!-- CERTIFICATES PAGE -->
+  <div id="page-certificates" class="page">
+    <div class="page-header">
+      <h1>🎓 Free Certificate Hub</h1>
+      <p>300+ free courses with industry-recognized certificates</p>
+    </div>
+
+    <div class="cert-categories">
+      <button class="cat-btn active" onclick="filterCerts('all', this)">All</button>
+      <button class="cat-btn" onclick="filterCerts('programming', this)">💻 Programming</button>
+      <button class="cat-btn" onclick="filterCerts('ai', this)">🤖 AI/ML</button>
+      <button class="cat-btn" onclick="filterCerts('cloud', this)">☁️ Cloud</button>
+      <button class="cat-btn" onclick="filterCerts('cybersecurity', this)">🔒 Cybersecurity</button>
+      <button class="cat-btn" onclick="filterCerts('data', this)">📊 Data Science</button>
+      <button class="cat-btn" onclick="filterCerts('database', this)">🗄️ SQL/Database</button>
+      <button class="cat-btn" onclick="filterCerts('tools', this)">⚙️ DevOps Tools</button>
+      <button class="cat-btn" onclick="filterCerts('softskills', this)">🌟 Soft Skills</button>
+    </div>
+
+    <div class="cards-grid" id="certsGrid"></div>
+  </div>
+
+  <!-- LEARNING HUB PAGE -->
+  <div id="page-learning" class="page">
+    <div class="page-header">
+      <h1>📚 Learning Hub</h1>
+      <p>Official, curated learning resources for every technology</p>
+    </div>
+    <div class="learning-topics" id="learningTopics"></div>
+  </div>
+
+  <!-- ROADMAPS PAGE -->
+  <div id="page-roadmaps" class="page">
+    <div class="page-header">
+      <h1>🗺️ Unlimited Career Roadmaps</h1>
+      <p>Step-by-step interactive paths & AI live roadmap generator for any career goal</p>
+    </div>
+    <div class="generator-card" style="margin-bottom: 24px;">
+      <h3>⚡ Search or Generate ANY Career Roadmap</h3>
+      <div class="gen-row">
+        <input type="text" class="form-input" id="customRoadmapInput" placeholder="Type ANY Career Goal (e.g. Blockchain, Game Dev, Data Analyst, Embedded)..." style="flex:1;" onkeydown="if(event.key==='Enter')generateCustomRoadmap()" />
+        <button class="btn btn-primary" onclick="generateCustomRoadmap()">Generate Roadmap ✨</button>
+      </div>
+    </div>
+    <div class="roadmap-selector" id="roadmapSelector"></div>
+    <div class="roadmap-display" id="roadmapDisplay"></div>
+  </div>
+
+  <!-- HACKATHONS PAGE -->
+  <div id="page-hackathons" class="page">
+    <div class="page-header">
+      <h1>⚡ Hackathon Hub</h1>
+      <p>Compete, build, and win in top hackathons worldwide</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterHackathons('all', this)">All</button>
+      <button class="filter-btn" onclick="filterHackathons('online', this)">Online</button>
+      <button class="filter-btn" onclick="filterHackathons('offline', this)">Offline</button>
+      <button class="filter-btn" onclick="filterHackathons('prize', this)">Cash Prize</button>
+    </div>
+    <div class="cards-grid" id="hackathonsGrid"></div>
+  </div>
+
+  <!-- SCHOLARSHIPS PAGE -->
+  <div id="page-scholarships" class="page">
+    <div class="page-header">
+      <h1>🏆 Scholarship Hub</h1>
+      <p>Fund your education with government, private, and international scholarships</p>
+    </div>
+    <div class="cert-categories">
+      <button class="cat-btn active" onclick="filterScholarships('all', this)">All</button>
+      <button class="cat-btn" onclick="filterScholarships('government', this)">🏛️ Government</button>
+      <button class="cat-btn" onclick="filterScholarships('private', this)">🏢 Private</button>
+      <button class="cat-btn" onclick="filterScholarships('international', this)">🌍 International</button>
+      <button class="cat-btn" onclick="filterScholarships('college', this)">🎓 College</button>
+    </div>
+    <div class="cards-grid" id="scholarshipsGrid"></div>
+  </div>
+
+  <!-- JOBS PAGE -->
+  <div id="page-jobs" class="page">
+    <div class="page-header">
+      <h1>🚀 Job Board</h1>
+      <p>Latest job opportunities from startups to MNCs</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterJobs('all', this)">All</button>
+      <button class="filter-btn" onclick="filterJobs('fresher', this)">Freshers</button>
+      <button class="filter-btn" onclick="filterJobs('remote', this)">Remote</button>
+      <button class="filter-btn" onclick="filterJobs('parttime', this)">Part Time</button>
+      <button class="filter-btn" onclick="filterJobs('fulltime', this)">Full Time</button>
+      <button class="filter-btn" onclick="filterJobs('government', this)">Government</button>
+      <button class="filter-btn" onclick="filterJobs('startup', this)">Startup</button>
+    </div>
+    <div class="cards-grid" id="jobsGrid"></div>
+  </div>
+
+  <!-- AI TOOLS PAGE -->
+  <div id="page-aitools" class="page">
+    <div class="page-header">
+      <h1>🤖 AI Tools Directory</h1>
+      <p>Best AI tools to supercharge your productivity</p>
+    </div>
+    <div class="ai-tools-grid" id="aiToolsGrid"></div>
+  </div>
+
+  <!-- PROJECT HUB PAGE -->
+  <div id="page-projects" class="page">
+    <div class="page-header">
+      <h1>💡 Project Hub</h1>
+      <p>AI-generated project ideas with full resources</p>
+    </div>
+    <div class="project-generator">
+      <div class="generator-card">
+        <h3>🎯 Generate Project Idea</h3>
+        <div class="gen-row">
+          <select class="filter-select" id="projSkill">
+            <option value="">Select Skill</option>
+            <option>Python</option><option>JavaScript</option><option>Java</option>
+            <option>React</option><option>Node.js</option><option>AI/ML</option>
+            <option>Flutter</option><option>Android</option><option>Cloud</option>
+          </select>
+          <select class="filter-select" id="projDifficulty">
+            <option value="">Difficulty</option>
+            <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
+          </select>
+          <select class="filter-select" id="projTech">
+            <option value="">Technology</option>
+            <option>Web App</option><option>Mobile App</option><option>AI Tool</option>
+            <option>Data Dashboard</option><option>API</option><option>Games</option>
+          </select>
+          <button class="btn btn-primary" onclick="generateProjects()">Generate ✨</button>
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid" id="projectsGrid"></div>
+  </div>
+
+  <!-- RESUME BUILDER PAGE -->
+  <div id="page-resume" class="page">
+    <div class="page-header">
+      <h1>📄 Resume Builder</h1>
+      <p>Create ATS-optimized professional resumes in minutes</p>
+    </div>
+    <div class="resume-layout">
+      <div class="resume-form-panel">
+        <div class="resume-tabs">
+          <button class="rtab active" onclick="switchResumeTab('info',this)">Personal Info</button>
+          <button class="rtab" onclick="switchResumeTab('education',this)">Education</button>
+          <button class="rtab" onclick="switchResumeTab('experience',this)">Experience</button>
+          <button class="rtab" onclick="switchResumeTab('skills',this)">Skills</button>
+          <button class="rtab" onclick="switchResumeTab('projects',this)">Projects</button>
+        </div>
+        <div class="resume-tab-content" id="resumeTabContent"></div>
+        <div class="resume-actions">
+          <button class="btn btn-primary" onclick="downloadResume()">⬇️ Download PDF</button>
+          <button class="btn btn-ghost" onclick="checkATS()">🤖 Check ATS Score</button>
+          <button class="btn btn-outline" onclick="fillSampleResume()">✨ Fill Sample Data</button>
+        </div>
+      </div>
+      <div class="resume-preview-panel">
+        <div class="resume-preview" id="resumePreview">
+          <div class="rp-header">
+            <h2 id="rp-name">Your Name</h2>
+            <p id="rp-title">Software Engineer</p>
+            <div class="rp-contact">
+              <span id="rp-email">email@example.com</span>
+              <span id="rp-phone">+91 XXXXX XXXXX</span>
+              <span id="rp-location">City, Country</span>
+            </div>
+          </div>
+          <div class="rp-section">
+            <h3>Education</h3>
+            <div id="rp-education"><p>Your education details will appear here</p></div>
+          </div>
+          <div class="rp-section">
+            <h3>Skills</h3>
+            <div id="rp-skills"><p>Your skills will appear here</p></div>
+          </div>
+          <div class="rp-section">
+            <h3>Experience</h3>
+            <div id="rp-experience"><p>Your experience will appear here</p></div>
+          </div>
+          <div class="rp-section">
+            <h3>Projects</h3>
+            <div id="rp-projects"><p>Your projects will appear here</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ATS Score Modal -->
+    <div class="ats-result" id="atsResult" style="display:none;">
+      <div class="ats-card">
+        <h3>🤖 ATS Score Analysis</h3>
+        <div class="ats-score" id="atsScore">72</div>
+        <div class="ats-label">ATS Compatibility Score</div>
+        <div class="ats-tips" id="atsTips"></div>
+        <button class="btn btn-primary" onclick="document.getElementById('atsResult').style.display='none'">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERVIEW HUB PAGE -->
+  <div id="page-interview" class="page">
+    <div class="page-header">
+      <h1>🎯 Interview Hub</h1>
+      <p>Prepare with AI-powered mock interviews and real questions</p>
+    </div>
+    <div class="interview-tabs">
+      <button class="itab active" onclick="switchInterviewTab('hr', this)">HR Questions</button>
+      <button class="itab" onclick="switchInterviewTab('technical', this)">Technical</button>
+      <button class="itab" onclick="switchInterviewTab('coding', this)">Coding</button>
+      <button class="itab" onclick="switchInterviewTab('mock', this)">Mock Interview</button>
+    </div>
+    <div id="interviewContent"></div>
+  </div>
+
+  <!-- CODING PRACTICE PAGE -->
+  <div id="page-coding" class="page">
+    <div class="page-header">
+      <h1>💻 Coding Practice</h1>
+      <p>Daily challenges, DSA problems, and language-specific practice</p>
+    </div>
+    <div class="coding-layout">
+      <div class="coding-sidebar">
+        <div class="coding-langs">
+          <button class="lang-btn active" onclick="selectLang('python', this)">Python</button>
+          <button class="lang-btn" onclick="selectLang('java', this)">Java</button>
+          <button class="lang-btn" onclick="selectLang('cpp', this)">C++</button>
+          <button class="lang-btn" onclick="selectLang('javascript', this)">JavaScript</button>
+          <button class="lang-btn" onclick="selectLang('sql', this)">SQL</button>
+          <button class="lang-btn" onclick="selectLang('dsa', this)">DSA</button>
+        </div>
+        <div class="problem-list" id="problemList"></div>
+      </div>
+      <div class="coding-editor">
+        <div class="editor-header">
+          <span id="currentProblem">Select a problem to start</span>
+          <div class="editor-actions">
+            <button class="btn btn-ghost btn-sm" onclick="runCode()">▶ Run</button>
+            <button class="btn btn-primary btn-sm" onclick="submitCode()">Submit</button>
+          </div>
+        </div>
+        <div class="problem-desc" id="problemDesc"></div>
+        <textarea class="code-area" id="codeArea" placeholder="// Write your solution here..."></textarea>
+        <div class="code-output" id="codeOutput"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="page-dashboard" class="page">
+    <div class="page-header">
+      <h1>📊 Student Dashboard</h1>
+      <p>Track your learning journey and achievements</p>
+    </div>
+    <div class="dashboard-grid">
+      <div class="dash-card streak-card">
+        <div class="streak-circle">
+          <div class="streak-num">7</div>
+          <div class="streak-label">Day Streak 🔥</div>
+        </div>
+        <div class="streak-info">
+          <div class="streak-stat"><span>Longest</span><b>23 days</b></div>
+          <div class="streak-stat"><span>Today</span><b>✅ Done</b></div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>🎯 Daily Goals</h3>
+        <div class="goals-list" id="goalsList"></div>
+      </div>
+
+      <div class="dash-card">
+        <h3>📚 Learning Progress</h3>
+        <div class="progress-list" id="progressList"></div>
+      </div>
+
+      <div class="dash-card">
+        <h3>🏆 Achievements</h3>
+        <div class="badges-grid" id="badgesGrid"></div>
+      </div>
+
+      <div class="dash-card full-width">
+        <h3>📌 Saved Items</h3>
+        <div class="saved-tabs">
+          <button class="stab active" onclick="switchSaved('internships',this)">Internships</button>
+          <button class="stab" onclick="switchSaved('certificates',this)">Certificates</button>
+          <button class="stab" onclick="switchSaved('jobs',this)">Jobs</button>
+        </div>
+        <div id="savedContent" class="saved-grid"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- LOGIN PAGE -->
+  <div id="page-login" class="page">
+    <div class="login-container">
+      <div class="login-left">
+        <div class="login-brand">
+          <div class="logo-icon lg">L</div>
+          <h1>LEARNIX <span class="logo-ai">AI</span></h1>
+        </div>
+        <h2>Your Career Journey Starts Here</h2>
+        <p>Join 100,000+ students discovering opportunities every day</p>
+        <div class="login-features">
+          <div class="lf-item"><span>✅</span> 500+ Internship Opportunities</div>
+          <div class="lf-item"><span>✅</span> 300+ Free Certificates</div>
+          <div class="lf-item"><span>✅</span> AI-Powered Career Assistant</div>
+          <div class="lf-item"><span>✅</span> Personalized Learning Paths</div>
+        </div>
+      </div>
+      <div class="login-right">
+        <div class="login-card">
+          <div class="login-tabs">
+            <button class="ltab active" onclick="switchLoginTab('login', this)">Login</button>
+            <button class="ltab" onclick="switchLoginTab('signup', this)">Sign Up</button>
+          </div>
+          <div id="loginTabContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- AI Chatbot Floating Button -->
+<button class="chatbot-fab" id="chatbotFab" onclick="toggleChatbot()" title="AI Assistant">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+</button>
+
+<!-- Full Chatbot Modal -->
+<div class="chatbot-modal" id="chatbotModal">
+  <div class="chatbot-modal-header">
+    <div class="chatbot-title">
+      <div class="chat-avatar-lg">AI</div>
+      <div>
+        <div class="chatbot-name">LEARNIX AI Assistant</div>
+        <div class="chatbot-status">● Online</div>
+      </div>
+    </div>
+    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbotMessages">
+    <div class="chatmsg ai">
+      <div class="chatmsg-bubble">
+        👋 Hello! I'm your LEARNIX AI Career Assistant.<br><br>
+        I can help you with:<br>
+        • Finding internships & jobs<br>
+        • Recommending courses<br>
+        • Career roadmap advice<br>
+        • Resume tips<br>
+        • Interview preparation<br><br>
+        What would you like to explore today?
+      </div>
+    </div>
+  </div>
+  <div class="chatbot-input">
+    <input type="text" id="chatbotInput" placeholder="Ask me about internships, courses, jobs..." onkeydown="if(event.key==='Enter')sendChatbotMsg()" />
+    <button class="btn btn-primary" onclick="sendChatbotMsg()">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Real Embedded Video Modal -->
+<div class="ats-result" id="videoModal" style="display:none;">
+  <div class="ats-card" style="max-width: 720px; width: 90%; padding: 20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 id="videoModalTitle" style="font-size:1.1rem;">📹 Video Tutorial Player</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeVideoModal()">✕ Close</button>
+    </div>
+    <div id="videoModalContainer" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; background:#000;">
+      <!-- Iframe injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<script src="./js/data.js?v=4.0"></script>
+<script src="./js/app.js?v=4.0"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let r of registrations) r.unregister();
+    });
+  }
+</script>
+</body>
+</html>

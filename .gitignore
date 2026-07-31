@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Local Environment & Logs
+*.log
+.env
+.env.local
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Temporary files
+.temp/
+dist/
+build/
